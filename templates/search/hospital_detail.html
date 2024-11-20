@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search/hospital_detail.css' %}">
+</head>
+
+<br><br>
+<div class="container">
+    <h2>{{ hospital.name }} ({{ hospital.address }})</h2>
+    <br>
+
+    <!-- 벌금 표시 -->
+    <h4>
+        <b>벌금 <span style="color: red;">{{ fine_text }}</span></b>
+    </h4>
+
+    진단 결과 요약!
+
+    - ✅ <b>완벽하게 작성된 항목:</b> {{o_count}}개! 아주 훌륭합니다, 이 항목들은 베스트셀러급이군요!
+    - ⚠️ <b>미흡하게 작성된 항목:</b> {{f_count}}개... 조금만 더 신경 써주시면 좋겠어요! (수정하는데 10분이면 됩니다, 걱정 마세요 😎)
+    - ❌ <b>작성하지 않은 항목:</b> {{x_count}}개 😱 이건 마치 중요한 걸 깜빡한 느낌! 다시 체크해보시는 걸 추천드립니다.
+
+    벌금 경고!
+
+    - 이대로라면 벌금이 {{ fine_text }}에 달할 수 있습니다. 지금 고치면 커피 한 잔 값으로 막을 수 있어요! ☕**
+
+    필수 항목 체크
+
+    - 필수 항목 중 {{ missing_required_count }}개가 작성되지 않았습니다! (필수니까 꼭 확인해주세요 🙏)
+    - 선택 항목 중 {{ missing_optional_count }}개가 누락되었습니다. 있어도 좋고 없어도 좋지만, 있으면 더 신뢰감을 줄 수 있습니다! 😉
+
+    <!-- 생성기 바로가기 -->
+    개인정보 처리방침 생성하러 가기 👉 
+    <a href="http://127.0.0.1:8000/generatorHave/genHave_home/" target="_blank" style="color: rgb(20, 20, 20); text-decoration: underline;">
+        : http://127.0.0.1:8000/generatorHave/genHave_home/
+    </a>
+
+    <!-- 위반 항목 표시 -->
+    {% if violations %}
+        <p>위반한 항목: {{ violations|join:", " }}</p>
+    {% else %}
+        <p>위반한 항목: -</p>
+    {% endif %}
+
+    <div style="padding: 10px;">
+        <!-- 처리방침 유무 -->
+        <div class="{% if hospital.has_policy|lower == 'o' %}policy-yes
+                    {% elif hospital.has_policy|lower == 'x' %}policy-no
+                    {% elif hospital.has_policy|lower == 'f' %}policy-f
+                    {% elif hospital.has_policy == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">처리방침 유무</span>
+            <span class="policy-status">{{ hospital.has_policy }}</span>
+            <br>
+
+            {% if hospital.has_policy|lower == 'x' or hospital.has_policy|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.has_policy == 'x' %}x{% else %}f{% endif %}">- 제30조 제1항 제1호</span></p>
+                <p><span class="policy-law-{% if hospital.has_policy == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제3호</span></p>
+                <p><span class="policy-law-{% if hospital.has_policy == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>        
+
+        <!-- 개인정보의 처리 목적 -->
+        <div class="{% if hospital.processing_purpose|lower == 'o' %}policy-yes
+                    {% elif hospital.processing_purpose|lower == 'x' %}policy-no
+                    {% elif hospital.processing_purpose|lower == 'f' %}policy-f
+                    {% elif hospital.processing_purpose == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">개인정보의 처리 목적</span>
+            <span class="policy-status">{{ hospital.processing_purpose }}</span>
+            <br>
+
+            {% if hospital.processing_purpose|lower == 'x' or hospital.processing_purpose|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.processing_purpose == 'x' %}x{% else %}f{% endif %}">- 제30조 제1항 제1호</span></p>
+                <p><span class="policy-law-{% if hospital.processing_purpose == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제3호</span></p>
+                <p><span class="policy-law-{% if hospital.processing_purpose == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>        
+
+        <!-- 처리하는 개인정보의 항목 -->
+        <div class="{% if hospital.processed_items|lower == 'o' %}policy-yes
+                    {% elif hospital.processed_items|lower == 'x' %}policy-no
+                    {% elif hospital.processed_items|lower == 'f' %}policy-f
+                    {% elif hospital.processed_items == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">처리하는 개인정보의 항목</span>
+            <span class="policy-status">{{ hospital.processed_items }}</span>
+            <br>
+
+            {% if hospital.processed_items|lower == 'x' or hospital.processed_items|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.processed_items == 'x' %}x{% else %}f{% endif %}">- 제22조(동의를 받는 방법)</span></p>
+                <p><span class="policy-law-{% if hospital.processed_items == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제3호</span></p>
+                <p><span class="policy-law-{% if hospital.processed_items == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- 개인정보의 처리 및 보유기간 -->
+        <div class="{% if hospital.retention_period|lower == 'o' %}policy-yes
+                    {% elif hospital.retention_period|lower == 'x' %}policy-no
+                    {% elif hospital.retention_period|lower == 'f' %}policy-f
+                    {% elif hospital.retention_period == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">개인정보의 처리 및 보유기간</span>
+            <span class="policy-status">{{ hospital.retention_period }}</span>
+            <br>
+
+            {% if hospital.retention_period|lower == 'x' or hospital.retention_period|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.retention_period == 'x' %}x{% else %}f{% endif %}">- 제30조 제1항 제2호</span></p>
+                <p><span class="policy-law-{% if hospital.retention_period == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제8호</span></p>
+                <p><span class="policy-law-{% if hospital.retention_period == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>        
+
+        <!-- 파기 절차 및 방법 -->
+        <div class="{% if hospital.destruction_procedure|lower == 'o' %}policy-yes
+                    {% elif hospital.destruction_procedure|lower == 'x' %}policy-no
+                    {% elif hospital.destruction_procedure|lower == 'f' %}policy-f
+                    {% elif hospital.destruction_procedure == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">파기 절차 및 방법</span>
+            <span class="policy-status">{{ hospital.destruction_procedure }}</span>
+            <br>
+
+            {% if hospital.destruction_procedure|lower == 'x' or hospital.destruction_procedure|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.destruction_procedure == 'x' %}x{% else %}f{% endif %}">- 법 제21조제1항</span></p>
+                <p><span class="policy-law-{% if hospital.destruction_procedure == 'x' %}x{% else %}f{% endif %}">- 법 제75조 제2항 제4호</span></p>
+                <p><span class="policy-law-{% if hospital.destruction_procedure == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 600, 2회 위반: 1200, 3회 위반: 2400</span></p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 개인정보의 제3자 제공 -->
+        <div class="{% if hospital.third_party_provision|lower == 'o' %}policy-yes
+                    {% elif hospital.third_party_provision|lower == 'x' %}policy-no
+                    {% elif hospital.third_party_provision|lower == 'f' %}policy-f
+                    {% elif hospital.third_party_provision == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">개인정보의 제3자 제공</span>
+            <span class="policy-status">{{ hospital.third_party_provision }}</span>
+            <br>
+
+            {% if hospital.third_party_provision|lower == 'x' or hospital.third_party_provision|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.third_party_provision == 'x' %}x{% else %}f{% endif %}">- 제30조 제1항 제3호</span></p>
+                <p><span class="policy-law-{% if hospital.third_party_provision == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제8호</span></p>
+                <p><span class="policy-law-{% if hospital.third_party_provision == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 개인정보 처리업무의 위탁 -->
+        <div class="{% if hospital.consignment|lower == 'o' %}policy-yes
+                    {% elif hospital.consignment|lower == 'x' %}policy-no
+                    {% elif hospital.consignment|lower == 'f' %}policy-f
+                    {% elif hospital.consignment == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">개인정보 처리업무의 위탁</span>
+            <span class="policy-status">{{ hospital.consignment }}</span>
+            <br>
+
+            {% if hospital.consignment|lower == 'x' or hospital.consignment|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.consignment == 'x' %}x{% else %}f{% endif %}">- 제30조 제1항 제4호</span></p>
+                <p><span class="policy-law-{% if hospital.consignment == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제8호</span></p>
+                <p><span class="policy-law-{% if hospital.consignment == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>        
+
+        <!-- 개인정보 자동 수집 장치의 설치・운영 및 거부 -->
+        <div class="{% if hospital.auto_collection_device|lower == 'o' %}policy-yes
+                    {% elif hospital.auto_collection_device|lower == 'x' %}policy-no
+                    {% elif hospital.auto_collection_device|lower == 'f' %}policy-f
+                    {% elif hospital.auto_collection_device == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">개인정보 자동 수집 장치의 설치・운영 및 거부</span>
+            <span class="policy-status">{{ hospital.auto_collection_device }}</span>
+            <br>
+            
+            {% if hospital.auto_collection_device|lower == 'x' or hospital.auto_collection_device|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.auto_collection_device == 'x' %}x{% else %}f{% endif %}">- 제30조 제1항 7호</span></p>
+                <p><span class="policy-law-{% if hospital.auto_collection_device == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제8호</span></p>
+                <p><span class="policy-law-{% if hospital.auto_collection_device == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 정보주체와 법정대리인의 권리・의무 및 행사방법 -->
+        <div class="{% if hospital.subject_rights|lower == 'o' %}policy-yes
+                    {% elif hospital.subject_rights|lower == 'x' %}policy-no
+                    {% elif hospital.subject_rights|lower == 'f' %}policy-f
+                    {% elif hospital.subject_rights == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">정보주체와 법정대리인의 권리・의무 및 행사방법</span>
+            <span class="policy-status">{{ hospital.subject_rights }}</span>
+            <br>
+
+            {% if hospital.subject_rights|lower == 'x' or hospital.subject_rights|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.subject_rights == 'x' %}x{% else %}f{% endif %}">- 제38조(권리행사의 방법 및 절차), 제30조 제1항 제5호</span></p>
+                <p><span class="policy-law-{% if hospital.subject_rights == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제8호</span></p>
+                <p><span class="policy-law-{% if hospital.subject_rights == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- 개인정보 책임자 or 부서 -->
+        <div class="{% if hospital.responsible_person|lower == 'o' %}policy-yes
+                    {% elif hospital.responsible_person|lower == 'x' %}policy-no
+                    {% elif hospital.responsible_person|lower == 'f' %}policy-f
+                    {% elif hospital.responsible_person == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">개인정보 책임자 or 부서</span>
+            <span class="policy-status">{{ hospital.responsible_person }}</span>
+            <br>
+
+            {% if hospital.responsible_person|lower == 'x' or hospital.responsible_person|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.responsible_person == 'x' %}x{% else %}f{% endif %}">- 제31조(개인정보 보호책임자의 지정 등), 제30조 제1항 제6호</span></p>
+                <p><span class="policy-law-{% if hospital.responsible_person == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제9호</span></p>
+                <p><span class="policy-law-{% if hospital.responsible_person == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>        
+
+        <!-- 고정형 영상정보처리기기 운영・관리 -->
+        <div class="{% if hospital.video_processing|lower == 'o' %}policy-yes
+                    {% elif hospital.video_processing|lower == 'x' %}policy-no
+                    {% elif hospital.video_processing|lower == 'f' %}policy-f
+                    {% elif hospital.video_processing == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">고정형 영상정보처리기기 운영・관리</span>
+            <span class="policy-status">{{ hospital.video_processing }}</span>
+            <br>
+
+            {% if hospital.video_processing|lower == 'x' or hospital.video_processing|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.video_processing == 'x' %}x{% else %}f{% endif %}">- 제25조(고정형 영상정보처리기기의 설치ㆍ운영 제한) 제7항</span></p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 개인정보 처리방침의 변경 -->
+        <div class="{% if hospital.policy_changes|lower == 'o' %}policy-yes
+                    {% elif hospital.policy_changes|lower == 'x' %}policy-no
+                    {% elif hospital.policy_changes|lower == 'f' %}policy-f
+                    {% elif hospital.policy_changes == 'nan' %}policy-nan{% endif %}">
+            <span class="policy-text">개인정보 처리방침의 변경</span>
+            <span class="policy-status">{{ hospital.policy_changes }}</span>
+            <br>
+
+            {% if hospital.policy_changes|lower == 'x' or hospital.policy_changes|lower == 'f' %}
+            <div class="law-info">
+                <p><span class="policy-law-{% if hospital.policy_changes == 'x' %}x{% else %}f{% endif %}">- 제30조(개인정보 처리방침의 수립 및 공개) 2항</span></p>
+                <p><span class="policy-law-{% if hospital.policy_changes == 'x' %}x{% else %}f{% endif %}">- 법 제75조제4항제8호</span></p>
+                <p><span class="policy-law-{% if hospital.policy_changes == 'x' %}x{% else %}f{% endif %}">- 1회 위반: 200, 2회 위반: 400, 3회 위반: 800</span></p>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <a href="{% url 'search:search_hospital' %}" class="btn btn-secondary">뒤로가기</a>
+</div>
+{% endblock %}

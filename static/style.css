@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'NicoMoji';
+    src: url('/static/fonts/NicoMoji-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-weight: bold;
+    src: url("{% static 'fonts/Montserrat-Bold.ttf' %}") format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-weight: normal;
+    src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+}
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.navbar-brand {
+    font-family: 'NicoMoji', sans-serif;
+}

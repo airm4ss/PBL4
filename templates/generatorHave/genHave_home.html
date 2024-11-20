@@ -1,0 +1,563 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Link the custom CSS file -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/generator/gen.css' %}">
+<style>
+    h1 {
+        font-weight: 700;
+    }
+</style>
+
+<!-- Form Section Begins -->
+<div class="container mt-5">
+    <div class="text-section text-left">
+        <h1 style="color: #333d4b">개인정보 처리방침 생성하기</h1>
+        <h4 style="color: #333d4b">홈페이지 보유</h4>
+        <p>개인정보 처리방침을 간편하게 생성하세요.<br>
+            아래 입력한 정보들을 바탕으로 병원 별 맞춤형 개인정보 처리방침을 생성해드립니다.<br>
+            개인정보 처리방침을 통해 병원은 개인정보 처리에 관한 투명성 제고 효과를, 이용자는 개인정보처리자가 자신의 개인정보를 어떻게 처리하고 있는지 비교하고 확인할 수 있어요.</p>
+        <br><br>
+
+        <form method="post">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+            <div class="form-group">
+                <div class="mb-3">
+                    <b><label for="privacy_policy_date" class="form-label">개인정보처리방침 시행 날짜</label><span style="color: #f66570;">*</span></b>
+                    <input type="date" id="privacy_policy_date" name="privacy_policy_date" class="form-control" required>
+                </div>                
+            </div>
+            <br><br>
+
+            <b><h3 style="color: #4e5968">병원 정보를 알려주세요</h3></b>
+            <div class="form-group">
+                <label for="hospital_name">병원 이름</label><span style="color: #f66570;">*</span>
+                <input type="text" id="hospital_name" name="hospital_name" class="form-control" required>
+            </div>
+            <b><p style="color: #f66570;">*개인정보 처리자를 따로 지정하지 않았을 경우 병원장이 개인정보처리자가 됩니다.</p></b>
+            <br>
+
+            <div class="form-group">
+                <label for="department">병원 진료과</label><span style="color: #f66570;">*</span>
+                <div class="radio-inline-group">
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="비뇨기과" id="urology" required>
+                        비뇨기과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="소아과" id="pediatrics" required>
+                        소아(청소년)과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="외과" id="surgery" required>
+                        외과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="안과" id="ophthalmology" required>
+                        안과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="산부인과" id="obgyn" required>
+                        산부인과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="내과" id="internal_medicine" required>
+                        내과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="이비인후과" id="ent" required>
+                        이비인후과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="피부과" id="dermatology" required>
+                        피부과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="성형외과" id="plastic_surgery" required>
+                        성형외과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="치과" id="dentistry" required>
+                        치과
+                    </label>
+                    <label class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="department" value="한의원" id="oriental_medicine" required>
+                        한의원
+                    </label>
+                </div>
+            </div>            
+            <br><br>
+
+            <div class="form-group">
+                <b><label for="data_protection_officer">개인정보책임자명</label></b><span style="color: #f66570;">*</span>
+                <input type="text" id="data_protection_officer" name="data_protection_officer" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="position">직위</label><span style="color: #f66570;">*</span>
+                <input type="text" id="position" name="position" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">휴대전화번호</label><span style="color: #f66570;">*</span>
+                <input type="text" id="phone_number" name="phone_number" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">이메일</label><span style="color: #f66570;">*</span>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fax_number">팩스번호</label>
+                <input type="text" id="fax_number" name="fax_number" class="form-control">
+            </div>
+            <br><br>
+
+            <div class="form-group">
+                <div class="form-group">
+                    <b><label>개인정보 보호 담당부서가 있나요?</label></b><span style="color: #f66570;">*</span>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="has_privacy_officer" value="예" id="privacy_yes" required>
+                        <label class="form-check-label" for="privacy_yes">예</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="has_privacy_officer" value="아니요" id="privacy_no" required>
+                        <label class="form-check-label" for="privacy_no">아니요</label>
+                    </div>
+                </div>
+    
+                <!-- Hidden fields for 개인정보 보호 담당부서 details -->
+                <div id="privacy_officer_details" style="display: none;">
+                    <div class="form-group">
+                        <b><label for="privacy_officer_name">개인정보보호 담당부서명</label></b><span style="color: #f66570;">*</span>
+                        <input type="text" id="privacy_officer_name" name="privacy_officer_name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="privacy_officer_phone">전화번호</label><span style="color: #f66570;">*</span>
+                        <input type="text" id="privacy_officer_phone" name="privacy_officer_phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="privacy_officer_email">이메일</label><span style="color: #f66570;">*</span>
+                        <input type="email" id="privacy_officer_email" name="privacy_officer_email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="privacy_officer_fax">팩스번호</label>
+                        <input type="text" id="privacy_officer_fax" name="privacy_officer_fax" class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <br><br>
+            <div class="form-group">
+                <b><label for="cctv_installed">주차장 내 CCTV 설치 여부</label></b><span style="color: #f66570;">*</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cctv_installed" name="cctv_installed">
+                    <label class="form-check-label" for="cctv_installed">설치됨</label>
+                </div>
+            </div>
+
+            <br><br>
+            <div class="form-group">
+                <b><label>홈페이지에서 운영하는 기능들을 모두 체크해주세요</label></b>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="website_functions" value="회원가입" id="function_signup">
+                    <label class="form-check-label" for="function_signup">회원가입</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="website_functions" value="주문처리" id="function_order_payment">
+                    <label class="form-check-label" for="function_order_payment">홈페이지 내 주문 및 결제 처리</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="website_functions" value="배송" id="function_delivery">
+                    <label class="form-check-label" for="function_delivery">홈페이지 내 상품 배송</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="website_functions" value="이벤트" id="function_event">
+                    <label class="form-check-label" for="function_event">이벤트 참여 및 경품 응모 행사 진행</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="website_functions" value="마케팅" id="function_marketing">
+                    <label class="form-check-label" for="function_marketing">마케팅 및 광고에 고객 정보 활용</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="website_functions" value="건의함" id="function_suggestion_box">
+                    <label class="form-check-label" for="function_suggestion_box">고객 건의함 운영</label>
+                </div>
+            </div>            
+
+            
+            <br><br>
+            <!-- 제3자 제공 여부 묻는 라디오 버튼 -->
+            <div class="form-group">
+                <b><label for="third_party_provision">개인정보를 제3자에게 제공하고 있습니까?</label></b><span style="color: #f66570;">*</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="third_party_provision" value="예" id="third_party_yes" required>
+                    <label class="form-check-label" for="third_party_yes">예</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="third_party_provision" value="아니요" id="third_party_no" required>
+                    <label class="form-check-label" for="third_party_no">아니요</label>
+                </div>
+            </div>
+
+            <!-- 제3자 제공 표가 추가되는 영역 -->
+            <div id="third_party_table_container" style="display: none;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>제공받는 자<span style="color: #f66570;">*</span></th>
+                            <th>제공목적<span style="color: #f66570;">*</span></th>
+                            <th>제공항목<span style="color: #f66570;">*</span></th>
+                            <th>제공 근거 및 보유/이용 기간<span style="color: #f66570;">*</span></th>
+                            <th>행 삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody id="third_party_table_body">
+                        <!-- 기본 행들 -->
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="건강보험심사평가원"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="의약품 처방·조제 정보 전송"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="성명, 주민번호"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="의료법 제18조2"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="고용노동부"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="고용보험 자격득실, 고용보험료 납부, 고용보험료 연말정산, 고용노동부 지원금 신청, 육아휴직 및 출산휴가 급여 신청, 임산부 야간·휴일근로 인가, 퇴직 정산, 이직신고서 제출, 퇴사확인서 제출, 보수총액신고"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="성명, 급여, 통상임금, 입사/퇴사일, 주민등록번호(장애인), 체류자격(외국인), 주소, 연락처, 근무월수, 연간근로소득, 근로자보수, 휴직사유, 휴직 및 산휴기간, 사직사유, 고용구분 및 계약만료일, 주소정근로시간, 부서, 생년월일, 출산일(예정일)·유·사산일, 과거 급여 내역(최소 3년치), 근로자 자녀 주민등록번호(직장 보육시설 지원금 등 신청용), 육아기 근로시간 단축 기간"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="고용보험법 제15조, 제42조, 제71조, 제75조 등"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="국민건강보험공단"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="건강보험 자격득실, 건강보험 피부양자 취득, 보험료 납부, 과납진료비 환급, 보험료 연말정산, 건강검진신고, 휴/복직신고, 퇴직 정산, 해외출입국시 보험료 감면, 보수총액신고"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="성명, 주민등록번호, 입사/퇴사/휴직/복직일, 국적, 체류자격(외국인), 연락처, 피부양자 성명, 피부양자 주민등록번호, 휴직사유, 근로자보수, 근무월수, 급여계좌, 연간근로소득, 휴직기간 보수, 해외출입국일자, 과거 급여 내역(최소 3년치)"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="국민건강보험법 제7조, 제8조, 제9조, 제10조, 제74조, 제94조 등"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="질병관리청"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="코로나 이상반응 법정 감염병 역학조사"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="환자등록번호, 환자명, 생년월일, 성별, 진료기록"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="의료법 제21조 제3항 제16호
+                                감염병의 예방 및 관리에 관한 법률 제18조의4 및 제29조"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="보건소"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="법정감염병 신고"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="이름, 휴대전화번호, 주민번호, 직업, 성별, 주소"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="3년 (이상반응자 명부 10년)"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="질병관리청"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="코로나 이상반응 법정 감염병 역학조사"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="환자등록번호, 환자명, 생년월일, 성별, 진료기록"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="의료법 제21조 제3항 제16호 감염병의 예방 및 관리에 관한 법률 제18조의4 및 제29조"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="보건소"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="법정감염병 신고"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="이름, 휴대전화번호, 주민번호, 직업, 성별, 주소"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="3년 (이상반응자 명부 10년)"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="recipient[]" class="form-control" value="질병관리청"></td>
+                            <td><input type="text" name="purpose[]" class="form-control" value="법정 감염병 발생 신고 병원체 검사결과 신"></td>
+                            <td><input type="text" name="items[]" class="form-control" value="환자등록번호, 환자명, 생년월일, 성별, 국적정보,
+                                주민(외국인)등록번호, 여권번호, 주소, 전화번호, 환자 직업, 보호자 성명, 보호자연락처, 추정감염지역(국내/국외 거주기간, 입국일), 감염병명, 감염병발생정보 (분류, 의심증상유무, 진단검사 시행 유무), 사망정보 (사인, 사망일자)"></td>
+                            <td><input type="text" name="legal_basis[]" class="form-control" value="감염병의 예방 및 관리에 관한 법률 제2조, 제5조, 제11조, 제12조, 제16조의2, 제17조, 제21조, 제23조,  제31조, 제35조의2, 제40조"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" id="add_row" class="btn btn-primary">행 추가</button>
+            </div>
+            <br><br>
+
+            
+            <!-- 위탁 관련 표 -->
+            <div class="form-group">
+                <b><label>개인정보를 위탁하고 있습니까?</label></b><span style="color: #f66570;">*</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="data_outsourcing" value="위탁하지 않음" id="outsourcing_no" required>
+                    <label class="form-check-label" for="outsourcing_no">위탁하지 않음</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="data_outsourcing" value="위탁하고 있음" id="outsourcing_yes" required>
+                    <label class="form-check-label" for="outsourcing_yes">위탁하고 있음</label>
+                </div>
+            </div>
+            
+            <!-- 위탁 관련 표 -->
+            <div id="outsourcing_table_container" style="display: none;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>위탁받는 자(수탁자)<span style="color: #f66570;">*</span></th>
+                            <th>위탁업무<span style="color: #f66570;">*</span></th>
+                            <th>행 삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody id="outsourcing_table_body">
+                        <!-- 기본 행들 -->
+                        <tr>
+                            <td><input type="text" name="outsourced_company[]" class="form-control" placeholder="위탁받는 자 입력"></td>
+                            <td><input type="text" name="outsourced_purpose[]" class="form-control" placeholder="위탁업무 입력"></td>
+                            <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" id="add_outsourcing_row" class="btn btn-primary">행 추가</button>
+            </div>
+
+            <div class="container mt-5">
+                <div class="accordion" id="cctvAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingCCTV">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCCTV" aria-expanded="false" aria-controls="collapseCCTV">
+                                고정형 영상정보처리기기 운영 및 관리 방침<span style="color: #f66570;">*</span>
+                            </button>
+                        </h2>
+                        <div id="collapseCCTV" class="accordion-collapse collapse" aria-labelledby="headingCCTV" data-bs-parent="#cctvAccordion">
+                            <div class="accordion-body">
+                                <b><h5>고정형 영상정보처리기기 설치 및 운영 정보</h5></b>
+                                <p>병원은 아래와 같이 영상정보처리기기를 설치 및 운영하고 있습니다.</p>
+            
+                                <p><strong>[설치 대수, 설치 위치 및 촬영범위]</strong></p>
+                                <div class="form-group">
+                                    <label for="installation_count">설치대수</label><span style="color: #f66570;">*</span>
+                                    <input type="number" id="installation_count" name="installation_count" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="installation_location">설치 위치</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="installation_location" name="installation_location" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shooting_range">촬영 범위</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="shooting_range" name="shooting_range" class="form-control" placeholder="촬영 범위를 입력해주세요." required>
+                                </div>
+            
+                                <p><strong>[관리책임자, 담당부서 및 접근권한자]</strong></p>
+                                <div class="form-group">
+                                    <label for="manager_name">관리책임자 이름</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="manager_name" name="manager_name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="manager_phone">전화번호</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="manager_phone" name="manager_phone" class="form-control" required>
+                                </div>
+            
+                                <p><strong>[촬영시간, 보관기관, 보관장소]</strong></p>
+                                <div class="form-group">
+                                    <label for="recording_time">촬영시간</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="recording_time" name="recording_time" class="form-control" placeholder="촬영 시간을 입력해주세요." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="retention_period">보관기간</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="retention_period" name="retention_period" class="form-control" placeholder="보관 기간을 입력해주세요." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="storage_location">보관장소</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="storage_location" name="storage_location" class="form-control" placeholder="보관 장소를 입력해주세요." required>
+                                </div>
+                                
+                                <br><br>
+                                <b><h5>고정형 영상정보처리기기 설치 및 관리 등의 위탁에 관한 사항</h5></b>
+                                <div class="form-group">
+                                    <label for="contractor">수탁업체</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="contractor" name="contractor" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contractor_contact">담당자</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="contractor_contact" name="contractor_contact" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contractor_phone">연락처</label><span style="color: #f66570;">*</span>
+                                    <input type="text" id="contractor_phone" name="contractor_phone" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <br><br>
+            <div class="form-group">
+                <b><label for="privacy_links">이전 개인정보 처리방침 링크</label><span style="color: #f66570;">*</span></b>
+                <div id="privacy_links_container">
+                    <input type="url" id="privacy_link_1" name="privacy_link[]" class="form-control privacy-link" placeholder="이전 개인정보처리방침의 링크를 입력하세요.">
+                </div>
+            </div>
+
+            <br><br>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <br><br>
+        </form>
+    </div>
+</div>
+<!-- Form Section Ends -->
+
+
+<script>
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set the value of the date input field to the current date
+    document.getElementById('privacy_policy_date').value = today;
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const privacyYes = document.getElementById('privacy_yes');
+        const privacyNo = document.getElementById('privacy_no');
+        const privacyOfficerDetails = document.getElementById('privacy_officer_details');
+
+        privacyYes.addEventListener('change', function () {
+            if (privacyYes.checked) {
+                privacyOfficerDetails.style.display = 'block';
+            }
+        });
+
+        privacyNo.addEventListener('change', function () {
+            if (privacyNo.checked) {
+                privacyOfficerDetails.style.display = 'none';
+            }
+        });
+    });
+
+
+    // Function to add new input fields dynamically
+    function addNewPrivacyLinkField() {
+        const container = document.getElementById('privacy_links_container');
+        const inputs = container.getElementsByClassName('privacy-link');
+        const lastInput = inputs[inputs.length - 1];
+
+        // Check if the last input has a value
+        if (lastInput.value !== '') {
+            // Create a new input element
+            const newInput = document.createElement('input');
+            const newId = 'privacy_link_' + (inputs.length + 1);
+
+            // Set the attributes for the new input field
+            newInput.setAttribute('type', 'url');
+            newInput.setAttribute('id', newId);
+            newInput.setAttribute('name', 'privacy_link[]');
+            newInput.setAttribute('class', 'form-control privacy-link');
+            newInput.setAttribute('placeholder', 'Enter privacy link');
+
+            // Add the new input field to the container
+            container.appendChild(newInput);
+
+            // Attach an event listener to the new input field
+            newInput.addEventListener('input', addNewPrivacyLinkField);
+        }
+    }
+
+    // Attach the initial event listener to the first input field
+    document.getElementById('privacy_link_1').addEventListener('input', addNewPrivacyLinkField);
+
+
+function addNewLinkField() {
+    const container = document.getElementById('privacy_links_container');
+    const newInput = document.createElement('input');
+    newInput.setAttribute('type', 'url');
+    newInput.setAttribute('name', 'privacy_link[]');
+    newInput.setAttribute('class', 'form-control privacy-link');
+    newInput.setAttribute('placeholder', '이전 개인정보처리방침의 링크를 입력하세요.');
+    container.appendChild(newInput);
+}
+
+//제3자 제공 코드
+document.addEventListener('DOMContentLoaded', function() {
+        const thirdPartyYes = document.getElementById('third_party_yes');
+        const thirdPartyNo = document.getElementById('third_party_no');
+        const thirdPartyTableContainer = document.getElementById('third_party_table_container');
+
+        thirdPartyYes.addEventListener('change', function() {
+            if (thirdPartyYes.checked) {
+                thirdPartyTableContainer.style.display = 'block';
+            }
+        });
+
+        thirdPartyNo.addEventListener('change', function() {
+            if (thirdPartyNo.checked) {
+                thirdPartyTableContainer.style.display = 'none';
+            }
+        });
+
+        // 행 추가 버튼 클릭 시
+        document.getElementById('add_row').addEventListener('click', function() {
+            const tableBody = document.getElementById('third_party_table_body');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" name="recipient[]" class="form-control" placeholder="제공받는 자 입력"></td>
+                <td><input type="text" name="purpose[]" class="form-control" placeholder="제공목적 입력"></td>
+                <td><input type="text" name="items[]" class="form-control" placeholder="제공항목 입력"></td>
+                <td><input type="text" name="legal_basis[]" class="form-control" placeholder="제공 근거 입력"></td>
+                <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+            `;
+            tableBody.appendChild(newRow);
+        });
+
+        // 행 삭제 버튼 기능
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-row')) {
+                event.target.closest('tr').remove();
+            }
+        });
+    });
+
+
+    // 위탁 여부에 따라 테이블 표시
+    document.addEventListener('DOMContentLoaded', function() {
+        const outsourcingYes = document.getElementById('outsourcing_yes');
+        const outsourcingNo = document.getElementById('outsourcing_no');
+        const outsourcingTableContainer = document.getElementById('outsourcing_table_container');
+
+        outsourcingYes.addEventListener('change', function() {
+            if (outsourcingYes.checked) {
+                outsourcingTableContainer.style.display = 'block';
+            }
+        });
+
+        outsourcingNo.addEventListener('change', function() {
+            if (outsourcingNo.checked) {
+                outsourcingTableContainer.style.display = 'none';
+            }
+        });
+
+        // 행 추가 버튼 클릭 시
+        document.getElementById('add_outsourcing_row').addEventListener('click', function() {
+            const tableBody = document.getElementById('outsourcing_table_body');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" name="outsourced_company[]" class="form-control" placeholder="위탁받는 자 입력"></td>
+                <td><input type="text" name="outsourced_purpose[]" class="form-control" placeholder="위탁업무 입력"></td>
+                <td><button type="button" class="btn btn-danger remove-row">삭제</button></td>
+            `;
+            tableBody.appendChild(newRow);
+        });
+
+        // 행 삭제 버튼 기능
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-row')) {
+                event.target.closest('tr').remove();
+            }
+        });
+    });
+
+</script>
+
+
+{% endblock %}

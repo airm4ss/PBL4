@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="container text-center">
+        <h1>"개인정보 처리방침"의 모든 것</h1>
+        <h2>SWUPRI에서 쉽고 간편하게</h2>
+        <br>
+        <div class="button-container mt-4">
+            <a class="button" href="{% url 'generatorHave:genHave_home' %}">홈페이지 보유</a>
+            <a class="button" href="{% url 'generatorNo:generatorNo_home' %}">홈페이지 미보유</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 배경 이미지 설정 */
+    body {
+        background-image: url("{% static 'images/background2.png' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+    }
+    
+    /* 컨텐츠 중앙 정렬 */
+    .content-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 60px);
+        color: #333;
+        text-align: center;
+    }
+
+    .container h1, .container h2 {
+        font-size: 3.0rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0.5rem 0;
+        /* text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); /* 가독성을 위한 그림자 추가 */
+    }
+
+    /* 버튼 스타일 */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .button {
+        padding: 1rem 2rem; /* 버튼 크기 확대 */
+        font-size: 1.2rem; /* 버튼 글씨 크기 확대 */
+        font-weight: bold;
+        color: white !important; /* 텍스트 색상 고정 */
+        background-color: #2a3548; /* 기본 색상 */
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+    }
+
+    .button:hover {
+        background-color: #4e5968; /* 호버 시 배경 색상 */
+        color: white !important; /* 호버 시 텍스트 색상 고정 */
+    }
+
+    .button:active {
+        background-color: #3b4453; /* 클릭 시 색상 */
+        color: white !important; /* 클릭 시 텍스트 색상 고정 */
+    }
+</style>
+{% endblock %}

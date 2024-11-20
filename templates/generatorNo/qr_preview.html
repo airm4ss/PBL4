@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br><br>
+<div class="container text-center">
+    <b><h4>생성된 노션 페이지의 QR 코드</h4></b>
+
+    <p>노션 페이지 링크: <a href="{{ qr_code_url }}" target="_blank">{{ qr_code_url }}</a></p>
+
+    <!-- Flexbox 컨테이너로 이미지들을 옆에 배치, 중앙 정렬 -->
+    <div class="d-flex justify-content-center align-items-center flex-column flex-md-row gap-4">
+        <!-- QR 코드 미리보기 -->
+        <div>
+            <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code" class="img-fluid" style="width: 200px;">
+        </div>
+
+        <!-- 처리방침 부착 위치 이미지 -->
+        <div>
+            <img src="{% static 'images/generator/location.png' %}" alt="처리방침 부착 위치" class="img-fluid" style="width: 300px;">
+        </div>
+        
+        <!-- 텍스트 설명 -->
+        <div class="d-none d-md-block">
+            <- 처리방침 부착 위치
+        </div>
+    </div>
+
+    <!-- QR 코드 다운로드 버튼 -->
+    <a href="{% url 'generatorNo:download_qr_image' %}" class="btn btn-primary mt-4">QR 코드 다운로드</a>
+</div>
+
+{% endblock %}

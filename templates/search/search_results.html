@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search/hospital_detail.css' %}">
+</head>
+
+<style>
+        h1 {
+            font-weight: 700;
+        }
+</style>
+
+<div class="container">
+    <br><br><br><br><br>
+    <h1>병원 검색</h1>
+    <form method="get" action="{% url 'search:search_hospital' %}">
+        <div class="form-group">
+            <input type="text" name="name" id="name" class="form-control" 
+                   placeholder="병원 이름을 입력하세요" 
+                   value="{{ form.name.value|default:'' }}" 
+                   style="height: 50px; font-size: 1.2em;">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">검색</button>
+    </form>
+
+    <br><br>
+    {% if results %}
+        <h3>검색 결과</h3>
+        <div>
+            {% for hospital in results %}
+                <a href="{% url 'search:hospital_detail' hospital.id %}" style="text-decoration: none;">
+                    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                        <strong>{{ hospital.name }}</strong><br>
+                        <span>{{ hospital.address }}</span>
+                    </div>
+                </a>
+            {% empty %}
+                <p>검색 결과가 없습니다.</p>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>검색어를 입력해 주세요.</p>
+    {% endif %}
+</div>
+{% endblock %}

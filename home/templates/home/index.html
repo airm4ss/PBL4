@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Map Interaction</title>
+    <style>
+        /* 간단한 팝업 스타일 */
+        .popup {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid black;
+            padding: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1>서울 지도</h1>
+    <img src="{% static 'home/images/seoul_map.svg' %}" alt="Seoul Map">
+       
+    
+    <div id="popup" class="popup"></div>
+
+    <script>
+        // 모든 path 요소에 클릭 이벤트 추가
+        document.querySelectorAll('path').forEach(function (path) {
+            path.addEventListener('click', function (event) {
+                // id에 따라 다른 팝업 내용 설정
+                const pathId = path.id;
+                let popupContent = '';
+
+                switch (pathId) {
+                    case 'path1':
+                        popupContent = '<b>노원구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path2':
+                        popupContent = '<b>도봉구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path3':
+                        popupContent = '<b>광진구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path4':
+                        popupContent = '<b>성동구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path5':
+                        popupContent = '<b>성북구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path6':
+                        popupContent = '<b>서대문구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path7':
+                        popupContent = '<b>종로구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path8':
+                        popupContent = '<b>중구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path9':
+                        popupContent = '<b>동대문구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path10':
+                        popupContent = '<b>중랑구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path11':
+                        popupContent = '<b>강북구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path12':
+                        popupContent = '<b>은평구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path13':
+                        popupContent = '<b>동작구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path14':
+                        popupContent = '<b>관악구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path15':
+                        popupContent = '<b>서초구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path16':
+                        popupContent = '<b>강남구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path17':
+                        popupContent = '<b>강동구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;  
+                    case 'path18':
+                        popupContent = '<b>송파구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path19':
+                        popupContent = '<b>금천구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path20':
+                        popupContent = '<b>마포구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path21':
+                        popupContent = '<b>용산구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path22':
+                        popupContent = '<b>구로구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path23':
+                        popupContent = '<b>양천구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path24':
+                        popupContent = '<b>강서구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;
+                    case 'path25':
+                        popupContent = '<b>영등포구</b><br>전체 병원은 <b>21431곳</b> 입니다.<br>개인정보 처리방침을 기재하고 있는 경우는 <b>1932곳</b> 입니다.';
+                        break;   
+                
+                    // 각 path에 대한 케이스 추가
+                    default:
+                        popupContent = '기본 정보';
+                        break;
+                }
+
+                // 팝업창 표시
+                const popup = document.getElementById('popup');
+                popup.innerHTML = popupContent;
+                popup.style.display = 'block';
+                popup.style.left = event.pageX + 'px';
+                popup.style.top = event.pageY + 'px';
+            });
+        });
+
+        // 팝업창 클릭시 닫기
+        document.getElementById('popup').addEventListener('click', function () {
+            this.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

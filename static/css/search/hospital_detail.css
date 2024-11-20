@@ -1,0 +1,47 @@
+.policy-yes {
+    background-color: #E5FDD6;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.policy-no {
+    background-color: #FFE3E3;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.policy-nan {
+    background-color: #E9E9E9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.policy-f {
+    background-color: #FFE7D0;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.policy-text {
+    font-weight: bold;
+}
+
+.policy-yes .policy-status {
+    float: right;
+    color: #3C6B20;
+}
+
+.policy-no .policy-status {
+    float: right;
+    color: #CE2A2A;
+}
+
+.policy-nan .policy-status {
+    float: right;
+    color: #363636;
+}
+
+.policy-f .policy-status {
+    float: right;
+    color: #C25D00;
+}

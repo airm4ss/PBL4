@@ -1,0 +1,16 @@
+langchain
+langchain-openai
+tiktoken
+requests
+openai
+faiss-cpu
+torch
+transformers
+sentence-transformers
+langchain-community
+PyPDF2
+PyMuPDF
+rank_bm25
+langchain_huggingface
+fitz
+embeddings
